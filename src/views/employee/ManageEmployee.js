@@ -42,19 +42,19 @@ const ManageEmployee = () => {
     }
 
     const empDetail = {
-      first_name: firstName,
-      last_name: middleName,
-      middle_name: lastName,
-      employee_number: employeeNumber,
-      epf_number: epfNumber,
+      firstName: firstName,
+      lastName: middleName,
+      middleName: lastName,
+      employeeNumber: employeeNumber,
+      epfNumber: epfNumber,
       nic: nic,
-      employee_type: employeeType,
-      department_id: department,
+      employeeType: employeeType,
+      department: department,
       addresses: [],
       contacts: [],
-      has_ot: eligibleOT,
-      has_transport: eligibleTransport,
-      has_product_incentive: eligibleProductiveIncentive,
+      hasOt: eligibleOT,
+      hasTransport: eligibleTransport,
+      hasProductIncentive: eligibleProductiveIncentive,
     }
 
     const headers = {
