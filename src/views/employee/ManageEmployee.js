@@ -41,6 +41,22 @@ const ManageEmployee = () => {
       event.stopPropagation()
     }
 
+    const employeeType1 = {
+      name: 'HR Employee',
+      description: 'descritption',
+    }
+
+    const branch1 = {
+      name: 'Kandy Branch',
+      description: '',
+    }
+
+    const department1 = {
+      name: 'HR',
+      description: 'HR Department',
+      branch: branch1,
+    }
+
     const empDetail = {
       firstName: firstName,
       lastName: middleName,
@@ -48,13 +64,13 @@ const ManageEmployee = () => {
       employeeNumber: employeeNumber,
       epfNumber: epfNumber,
       nic: nic,
-      employeeType: employeeType,
-      department: department,
+      employeeType: employeeType1,
+      department: department1,
       addresses: [],
       contacts: [],
-      hasOt: eligibleOT,
-      hasTransport: eligibleTransport,
-      hasProductIncentive: eligibleProductiveIncentive,
+      hasOt: false,
+      hasTransport: true,
+      hasProductIncentive: false,
     }
 
     const headers = {
