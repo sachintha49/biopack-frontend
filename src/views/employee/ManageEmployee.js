@@ -13,6 +13,7 @@ import {
   CFormSelect,
   CFormTextarea,
 } from '@coreui/react'
+import axios from 'axios'
 
 const ManageEmployee = () => {
   const [validated, setValidated] = useState(false)
@@ -49,12 +50,30 @@ const ManageEmployee = () => {
       nic: nic,
       employee_type: employeeType,
       department_id: department,
-      addresses: address,
-      contacts: contactNo,
+      addresses: [],
+      contacts: [],
       has_ot: eligibleOT,
       has_transport: eligibleTransport,
       has_product_incentive: eligibleProductiveIncentive,
     }
+
+    const headers = {
+      'Access-Control-Allow-Origin': '*',
+    }
+
+    axios
+      .post('http://localhost:8080/employees', empDetail, {
+        headers: headers,
+      })
+      .then((response) => {
+        alert('okay')
+        console.log(response)
+      })
+      .catch((error) => {
+        alert('error eka awa')
+        console.log(error)
+      })
+
     event.preventDefault()
     console.log(empDetail)
     setValidated(true)
