@@ -12,8 +12,9 @@ import {
   CFormLabel,
   CFormSelect,
   CFormTextarea,
+  CRow,
 } from '@coreui/react'
-import axios from 'axios'
+import { saveEmployee } from 'src/core/config/employeeConfig'
 
 const ManageEmployee = () => {
   const [validated, setValidated] = useState(false)
@@ -73,25 +74,33 @@ const ManageEmployee = () => {
       hasProductIncentive: false,
     }
 
-    const headers = {
-      'Access-Control-Allow-Origin': '*',
-    }
-
-    axios
-      .post('http://localhost:8080/employees', empDetail, {
-        headers: headers,
-      })
-      .then((response) => {
+    saveEmployee(empDetail).subscribe({
+      next: (response) => {
         alert('okay')
-        console.log(response)
-      })
-      .catch((error) => {
+      },
+      error: (error) => {
         alert('error eka awa')
         console.log(error)
-      })
+      },
+    })
+    // const headers = {
+    //   'Access-Control-Allow-Origin': '*',
+    // }
+    // console.log(JSON.stringify(empDetail))
+    // axios
+    //   .post('http://localhost:8080/employees', empDetail, {
+    //     headers: headers,
+    //   })
+    //   .then((response) => {
+    //     alert('okay')
+    //     console.log(response)
+    //   })
+    //   .catch((error) => {
+    //     alert('error eka awa')
+    //     console.log(error)
+    //   })
 
     event.preventDefault()
-    console.log(empDetail)
     setValidated(true)
   }
 
@@ -266,7 +275,8 @@ const ManageEmployee = () => {
         />
         <CFormFeedback invalid>You must agree before submitting.</CFormFeedback>
       </CCol>
-      <CCol xs={12}>
+      <CCol xs={10}/>
+      <CCol xs={2}>
         <CButton color="primary" type="submit">
           Add Employee
         </CButton>
@@ -278,6 +288,14 @@ const ManageEmployee = () => {
 const Validation = () => {
   return (
     <CCard>
+      {/* <CRow>
+        <CCol xs={6}>
+          <CCardHeader>Employee</CCardHeader>
+        </CCol>
+        <CCol xs={6}>
+          <CButton color="primary">Add Employee</CButton>
+        </CCol>
+      </CRow> */}
       <CCardHeader>
         <strong>Add Employee</strong>
       </CCardHeader>

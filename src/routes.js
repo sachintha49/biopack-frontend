@@ -6,6 +6,7 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 
 // Base
 const ManageEmployee = React.lazy(() => import('./views/employee/ManageEmployee'))
+const ManageAttendance = React.lazy(() => import('./views/employee/Attendance'))
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
 const Cards = React.lazy(() => import('./views/base/cards/Cards'))
@@ -59,6 +60,7 @@ const routes = [
   { path: '/theme/typography', name: 'Typography', element: Typography },
   //***************** */
   { path: '/employee', name: 'Employee', element: ManageEmployee, exact: true },
+  { path: '/attendance', name: 'Attendance', element: ManageAttendance, exact: true },
   { path: '/base', name: 'Base', element: Cards, exact: true },
   { path: '/base/accordion', name: 'Accordion', element: Accordion },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', element: Breadcrumbs },
