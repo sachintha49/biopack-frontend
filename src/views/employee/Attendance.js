@@ -19,22 +19,26 @@ import moment from 'moment'
 const Attendance = () => {
   const [validated, setValidated] = useState(false)
   const [employeeID, setEmployeeID] = useState('')
-  const [totalTime, setTotalTime] = useState('')
+  const [totalTime, setTotalTime] = useState(0)
   const [inTime, setInTime] = useState('')
   const [outTime, setOutTime] = useState('')
-  const [date, setDate] = useState(new Date())
+  const [inDate, setInDate] = useState(new Date())
+  const [outDate, setOutDate] = useState(new Date())
 
   //setTotalTime(console.log(inTime, 'inTime'))
 
   const handleSubmit = (event) => {
-    console.log(moment(date).format('yyyy-MM-DD'), "date")
+    console.log(moment(inTime).format('HH:mm'), 'date')
+
     const attendanceDetail = {
       employee_id: employeeID,
-      month: moment(date).format('yyyy-MM-DD'),
-      in_time: moment(inTime).format('HH:MM:SS'),
-      out_time: moment(outTime).format('HH:MM:SS'),
+      inDate: moment(inDate).format('yyyy-MM-DD'),
+      in_time: moment(inTime).format('HH:mm'),
+      outDate: moment(outDate).format('yyyy-MM-DD'),
+      out_time: moment(outTime).format('HH:mm'),
       total_ot: totalTime,
     }
+
     console.log(attendanceDetail, 'attendanceDetail')
 
     saveAttendance(attendanceDetail).subscribe({
@@ -49,6 +53,27 @@ const Attendance = () => {
     })
     event.preventDefault()
     setValidated(true)
+  }
+
+  const calculateInTime = (intime) => {
+    setInTime(intime)
+    if (outTime === '') {
+      setTotalTime(0)
+    }
+  }
+
+  const calculateOutTime = (outtime) => {
+    if (inTime === '') {
+      alert('Please select In time')
+    } else {
+      setOutTime(outtime)
+      let calcInTime = moment(inTime).format('HH:mm')
+      let calcOutTime = moment(outtime).format('HH:mm')
+      calcOutTime = calcOutTime.replace(':','.')
+      calcInTime = calcInTime.replace(':','.')
+      let calcTotalTime = parseFloat(parseFloat(calcOutTime) - parseFloat(calcInTime)).toFixed(2);
+      setTotalTime(calcTotalTime)
+    }
   }
 
   return (
@@ -72,9 +97,14 @@ const Attendance = () => {
         </CFormSelect>
       </CCol>
       <CCol md={4}>
-        <CFormLabel>Date</CFormLabel>
+        <CFormLabel>In Date</CFormLabel>
         <div>
-          <ReactDatePicker selected={date} onChange={(date) => setDate(date)} maxDate={date} />
+          <ReactDatePicker
+            showTimeSelect
+            selected={inDate}
+            onChange={(date) => setInDate(date)}
+            maxDate={inDate}
+          />
         </div>
       </CCol>
       <CCol md={4}>
@@ -82,7 +112,7 @@ const Attendance = () => {
         <div>
           <ReactDatePicker
             selected={inTime}
-            onChange={setInTime}
+            onChange={(inTime) => calculateInTime(inTime)}
             showTimeSelect
             showTimeSelectOnly
             timeIntervals={15}
@@ -92,11 +122,23 @@ const Attendance = () => {
         </div>
       </CCol>
       <CCol md={4}>
+        <CFormLabel>Out Date</CFormLabel>
+        <div>
+          <ReactDatePicker
+            showTimeSelect
+            selected={outDate}
+            onChange={(date) => setOutDate(date)}
+            calculateOutTime
+            maxDate={outDate}
+          />
+        </div>
+      </CCol>
+      <CCol md={4}>
         <CFormLabel>Out Time</CFormLabel>
         <div className="col-md-4">
           <ReactDatePicker
             selected={outTime}
-            onChange={setOutTime}
+            onChange={(outTime) => calculateOutTime(outTime)}
             showTimeSelect
             showTimeSelectOnly
             timeIntervals={15}
